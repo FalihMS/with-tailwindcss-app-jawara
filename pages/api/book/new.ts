@@ -22,5 +22,5 @@ export default async function handler(
         .insert([
             { name, book_date, book_time, field_id  }
         ])
-    if (!error)  res.status(200).redirect('/book')
+    if (!error)  res.redirect(303, '/book')
 }
