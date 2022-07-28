@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import { ReactChild, useState } from 'react'
+import { Main } from '../../components/common/Main'
 import { SlotTable } from '../../components/datetimeTable/SlotTable'
 
 const Home: NextPage = () => {
@@ -9,26 +8,6 @@ const Home: NextPage = () => {
             <Utils />
             <SlotTable />
         </Main>
-    )
-}
-
-type MainProps = {
-    title: string
-    children?: ReactChild | ReactChild[]
-}
-
-const Main = ({title, children}: MainProps) => {
-    return(
-        <div className="flex h-screen flex-col items-center py-2 w-full">
-            <Head>
-                <title>{title}</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main className="grow flex flex-col w-full h-full items-center">
-                {children}
-            </main>
-        </div>
     )
 }
 

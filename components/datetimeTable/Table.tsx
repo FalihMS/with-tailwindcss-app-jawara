@@ -14,20 +14,6 @@ export const Table = ({children}: TableProps) =>{
     )
 }
 
-type RowHeader = {
-    data: any[]
-}
-export const HeaderTable = ({ data }: RowHeader) => {
-    return(
-        <div className="mb-4 border-r flex flex-col ">
-            <p className="bg-gray-200 h-20 w-48 text-center border-b" />
-            {
-                data.map((venue, index) => <p key={index} className="grow w-48 text-center border-b">{ venue }</p>)
-            }
-        </div>
-    )
-} 
-
 type MainDatetime = {
     children:  ReactChild | ReactChild[]
 } 

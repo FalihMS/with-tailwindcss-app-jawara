@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ReactChild } from "react"
 import { Cell } from "./Cell"
 
@@ -19,13 +20,16 @@ export const SlotCell = ({data, id, onClick, clickedIndex }: SlotCellProps) => {
 
         )
     }else{
+        const query = id.split("_")
         return (
             <ClickableCell
                 id={id}
                 clickedIndex={ clickedIndex }
                 onClick={ onClick }
             >
-                <p className="cursor-pointer text-green-400 border-green-200 bg-green-100 border-2 rounded py-2 w-2/3 self-center ">+ Add New</p>
+                <Link href={{ pathname:"/book/new", query:{field: query[0], time:query[1], date:query[2] } }}>
+                    <p className="cursor-pointer text-green-600 border-green-400 bg-green-200 border rounded py-2 w-2/3 self-center ">+ Add New</p>
+                </Link>
             </ClickableCell>
         )
     
