@@ -3,29 +3,12 @@ import { Cell } from "./Cell"
 import { SlotCell } from "./SlotCell"
 import { Table, MainTable, Row } from "./Table"
 
-
-// Helper, Need to delete later
-const getDateList = (): any[] => {
-    const dateOpen = 9
-    const dateClose = 24
-
-    const dateList = []
-    for (let index = dateOpen; index <= dateClose; index++) {
-        dateList.push({
-            time: index,
-            data: null
-        })        
-    }
-
-    return dateList
-}
-
 const mapVenueList = (data: any[]) => {
-    return data.map((field) => {return {id:field.id, name: field.name}})
+    return data.map((field) => { return { id: field.id, name: field.name } })
 }
 
-const mapBookingList = (data: any[]) =>{
-    return data.map((field) => {return field.booking_view})
+const mapBookingList = (data: any[]) => {
+    return data.map((field) => { return field.booking_view })
 }
 
 const mapVenueSlot = (bookingList: any[][]): any[][] => {
@@ -38,36 +21,37 @@ const mapVenueSlot = (bookingList: any[][]): any[][] => {
     for (let index = 0; index < bookingList.length; index++) {
         const dateList = []
         const bookingList = venueBookingList[index]
-        
+
         for (let index_j = dateOpen; index_j <= dateClose; index_j++) {
             const slot = {
                 time: index_j,
                 data: null
             }
 
-            if(bookingList[0] !== undefined){
-            
+            if (bookingList[0] !== undefined) {
+
                 const booking = bookingList[0]
 
-                if(index_j == booking.time){
+                if (index_j == booking.time) {
                     slot.data = booking.name
-                    bookingList.shift()    
+                    bookingList.shift()
                 }
             }
-            dateList.push(slot)        
+            dateList.push(slot)
         }
-        venueSlot.push(dateList)        
+        venueSlot.push(dateList)
     }
 
     return venueSlot
 }
+
 
 // Table Displaying Slot Available
 export const SlotTable = () => {
 
     const [data, setData] = useState({
         venue: [{
-            id:null,
+            id: null,
             name: null
         }],
         slot: [[{
@@ -83,15 +67,15 @@ export const SlotTable = () => {
         fetch('/api/book')
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
                 setData({
                     venue: mapVenueList(data),
                     slot: mapVenueSlot(mapBookingList(data))
                 })
                 setLoading(false)
+
             })
     }, [])
-    
+
     if (isLoading) return <p>Loading...</p>
 
     return (
@@ -103,7 +87,7 @@ export const SlotTable = () => {
 
                 <Row isHeader>
                     {
-                        getDateList().map((date, index) =>
+                        data.slot[0].map((date, index) =>
                             <Cell className="w-48 h-20 pt-8 bg-gray-200 text-center" key={index}>
                                 {`${date.time}:00`}
                             </Cell>
@@ -142,11 +126,11 @@ type RowHeader = {
     data: any[]
 }
 const HeaderTable = ({ data }: RowHeader) => {
-    return(
+    return (
         <div className="mb-4 border-r flex flex-col ">
             <p className="bg-gray-200 h-20 w-48 text-center border-b" />
             {
-                data.map((venue, index) => <p key={index} className="relative grow w-48 text-center border-b"><span className="absolute top-10 left-10">{ venue.name }</span></p>)
+                data.map((venue, index) => <p key={index} className="relative grow w-48 text-center border-b"><span className="absolute top-10 left-10">{venue.name}</span></p>)
             }
         </div>
     )
